@@ -1,7 +1,6 @@
 import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
 
-
 export type addTodoListAC = {
     type: 'ADD-TODOLIST',
     payload: {
@@ -52,17 +51,14 @@ export const TodoListReducer = (state: TodolistType[], action: ActionTypeTodoLis
             return (
                 state.filter(el => el.id !== action.payload.id)
             )
-            // delete tasks[id];
-            // setTasks({...tasks});
         }
         case "CHANGE-FILTER": {
             return (
                 state.map(el => el.id === action.payload.todolistId ? {...el, filter: action.payload.value} : el)
             )
         }
-
-            return state
     }
+    return state
 }
 export const addTodoListAC = (title: string) => {
     return {

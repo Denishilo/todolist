@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
@@ -6,8 +6,8 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
-
+export const AddItemForm = memo((props: AddItemFormPropsType) => {
+    console.log('add item form re-render ....')
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -25,7 +25,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error) {
+            setError(null);
+        }
         if (e.charCode === 13) {
             addItem();
         }
@@ -37,9 +39,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    error={!!error}
-                   style={{width:'85%'}}
-        size={"small"}/>
+                   style={{width: '85%'}}
+                   size={"small"}/>
         <Button onClick={addItem} variant="contained"
                 style={{maxWidth: '15%', height: '40px', minWidth: '30px', minHeight: '30px'}}>+</Button>
     </div>
-}
+})

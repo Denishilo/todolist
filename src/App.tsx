@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
@@ -23,13 +23,14 @@ export type TasksStateType = {
 }
 
 function App() {
+    console.log('App re-render ...')
     let statetodoList = useSelector<RootReducerType, TodolistType[]>(state => state.todoList)
     const dispatch = useDispatch()
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         const action = addTodoListAC(title);
         dispatch(action)
-    }
+    }, [dispatch])
 
     return (
         <div className="App">

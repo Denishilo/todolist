@@ -24,6 +24,6 @@ export const  EditableSpan=memo((props: EditableSpanPropsType) =>{
     }
 
     return editMode
-        ? <TextField id="outlined-basic" label="Outlined" variant="outlined"  value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+        ? <TextField id="outlined-basic" label="Outlined" variant="outlined" value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
         : <span onDoubleClick={activateEditMode}>{props.value}</span>
 })

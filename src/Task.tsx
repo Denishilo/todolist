@@ -5,16 +5,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, {ChangeEvent, memo} from "react";
 import {changeStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducer/taskReducer";
 import {useDispatch} from "react-redux";
+import {TaskType} from "./Todolist";
 
 type TaskTypeProps = {
-    isDone: boolean
-    title: string
-    id: string
+    task:TaskType
     todolistId: string
 }
 
 export const Task = memo((props: TaskTypeProps) => {
-    let {isDone, title, id, todolistId} = props
+    let {todolistId} = props
+    let {isDone, title, id} = props.task
     const dispatch = useDispatch()
 
     const onClickHandler = () => dispatch(removeTaskAC(todolistId, id))

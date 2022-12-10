@@ -61,7 +61,7 @@ export const Todolist = memo((props: PropsType) => {
             <div>
                 {
                     stateTask.map(t => {
-                        return <Task key={t.id} isDone={t.isDone} title={t.title} id={t.id} todolistId={todolistId}/>
+                        return <Task key={t.id} task={t} todolistId={todolistId}/>
                     })
                 }
             </div>

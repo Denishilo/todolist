@@ -9,15 +9,12 @@ import Grid from '@mui/material/Grid';
 import {addTodoListAC} from "./reducer/todoListReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./redux/store";
-
 export type FilterValuesType = "all" | "active" | "completed";
-
 export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
 }
-
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }

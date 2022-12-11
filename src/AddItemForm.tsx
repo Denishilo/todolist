@@ -39,7 +39,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    error={!!error}
-                   style={{width: '85%'}}
+                   style={{width:'230px'}}
                    size={"small"}/>
         <Button onClick={addItem} variant="contained"
                 style={{maxWidth: '15%', height: '40px', minWidth: '30px', minHeight: '30px'}}>+</Button>

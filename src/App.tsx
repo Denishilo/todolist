@@ -33,8 +33,8 @@ function App() {
         <div className="App">
             <HeaderBar/>
             <Container fixed>
-                <Grid container style={{padding: "20px 0 50px 0"}}>
-                    <Grid item style={{minWidth: '282px'}}>
+                <Grid container style={{padding: "20px 0 50px 10px"}}>
+                    <Grid item style={{minWidth: '310px', maxWidth:'300px'}}>
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
                 </Grid>

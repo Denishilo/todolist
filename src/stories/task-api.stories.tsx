@@ -8,9 +8,9 @@ export default {
 export const GetTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let id = "ea400c50-598a-40b7-b313-293456e06d7a"
+        let id = "689c1f71-6b56-46ce-8b6a-122a8e68839a"
         taskAPI.getTask(id)
-            .then(res=>setState(res.data))
+            .then(res => setState(res.data))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
@@ -18,10 +18,10 @@ export const GetTask = () => {
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let id = "ea400c50-598a-40b7-b313-293456e06d7a"
+        let id = "689c1f71-6b56-46ce-8b6a-122a8e68839a"
         const title = 'learn'
-        taskAPI.createTask(id,title)
-            .then(res=>setState(res.data.data.item))
+        taskAPI.createTask(id, title)
+            .then(res => setState(res.data.data.item))
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
@@ -29,10 +29,10 @@ export const CreateTask = () => {
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todoListId = "ea400c50-598a-40b7-b313-293456e06d7a";
-        const taskId = "749cff29-7f35-46cd-b8c9-685a4612380e"
-        taskAPI.deleteTask(todoListId,taskId)
-            .then(res=>setState(res.data))
+        const todoListId = "689c1f71-6b56-46ce-8b6a-122a8e68839a";
+        const taskId = "19f1ed77-a54a-448d-9efe-6fafae830216"
+        taskAPI.deleteTask(todoListId, taskId)
+            .then(res => setState(res.data))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
@@ -40,13 +40,13 @@ export const DeleteTask = () => {
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todoListId = "ea400c50-598a-40b7-b313-293456e06d7a";
-        let taskId = "0c3b921b-0b87-4870-84e9-c5bde7b72665";
+        const todoListId = "689c1f71-6b56-46ce-8b6a-122a8e68839a";
+        let taskId = "19f1ed77-a54a-448d-9efe-6fafae830216";
         let obj = {
-            title:'ahahahah'
+            title: 'ahahahah'
         }
-       taskAPI.updateTask(todoListId,taskId,obj)
-            .then(res=>setState(res.data))
+        taskAPI.updateTask(todoListId, taskId, obj)
+            .then(res => setState(res.data))
     }, [])
 
     return <div>{JSON.stringify(state)}</div>

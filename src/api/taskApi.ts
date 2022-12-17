@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const instanceTask = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
@@ -9,12 +8,27 @@ const instanceTask = axios.create({
     }
 })
 
-type TaskType = {
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
+}
+
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+
+export type TaskType = {
     description: string
     title: string
     completed: boolean
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
     id: string
@@ -24,15 +38,15 @@ type TaskType = {
 }
 
 type GetResponseType = {
-    items:TaskType[]
-    totalCount:number
-    error:string
+    items: TaskType[]
+    totalCount: number
+    error: string
 }
 
 type DataType = {
-    item:TaskType
+    item: TaskType
 }
-type ResponseType<T={}> = {
+type ResponseType<T = {}> = {
     resultCode: number
     messages: string[],
     data: T
@@ -45,10 +59,10 @@ export const taskAPI = {
     createTask(todoListId: string, title: string) {
         return instanceTask.post<ResponseType<DataType>>(`/todo-lists/${todoListId}/tasks`, {title})
     },
-    updateTask(todoListId:string, taskId:string, obj:object){
+    updateTask(todoListId: string, taskId: string, obj: object) {
         return instanceTask.put<ResponseType<DataType>>(`/todo-lists/${todoListId}/tasks/${taskId}`, obj)
     },
-    deleteTask(todoListId:string, taskId:string){
+    deleteTask(todoListId: string, taskId: string) {
         return instanceTask.delete<ResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`)
     }
 }

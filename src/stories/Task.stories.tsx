@@ -19,9 +19,12 @@ export default {
   decorators:[ReduxStoreProviderDecorator],
   args:{
     task:{
-      isDone:true,
+      status:2,
       title:'sssss',
-      id:'132'
+      id:'132',
+      order:0,
+      priority:0,
+      deadline:'', startDate:'', addedDate:'', completed:true, description: '', todoListId:'totodolistId1'
     },
     todolistId: 'totodolistId1',
   }
@@ -39,23 +42,21 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {   //как обе�
   const dispatch = useDispatch()
   const onClickHandler = action('remove-task')
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newIsDoneValue = e.currentTarget.checked;
-    dispatch(changeStatusAC(task.id, newIsDoneValue, todolistId))
+    let statusValue = e.currentTarget.checked ? 2 : 0;
+    dispatch(changeStatusAC(task.id, statusValue, todolistId))
   }
 
   const onTitleChangeHandler = (newValue: string) => {
     dispatch(changeTaskTitleAC(task.id, newValue, todolistId))
   }
-  return  <div className={task.isDone ? "is-done" : ""}>
-    <Checkbox onChange={onChangeHandler} checked={task.isDone} color='default'/>
+  return  <div className={task.status === 2 ? "is-done" : ""}>
+    <Checkbox onChange={onChangeHandler} checked={task.status === 2} color='default'/>
     <EditableSpan value={task.title} onChange={onTitleChangeHandler}/>
     <IconButton onClick={onClickHandler} aria-label="delete">
       <DeleteIcon/>
     </IconButton>
   </div>
 };
-
-
 
 const Test:ComponentStory<typeof Task> = (args)=>{
 

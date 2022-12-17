@@ -1,5 +1,6 @@
-import {FilterValuesType, TodolistType} from "../App";
 import {v1} from "uuid";
+import {todoListAPI, TodolistType} from "../api/todolistApi";
+import {Dispatch} from "redux";
 
 export type addTodoListAC = {
     type: 'ADD-TODOLIST',
@@ -32,13 +33,33 @@ type changeFilterAC = {
     }
 }
 
-const initialState: TodolistType[] = []
-type ActionTypeTodoListReducer = addTodoListAC | changeTodolistTitleAC | removeTodolistAC | changeFilterAC
+export type setTodoListsAC = {
+    type: 'SET-TODOS',
+    payload: {
+        arrayTodoList: TodolistType[]
+    }
+}
 
-export const TodoListReducer = (state: TodolistType[] = initialState, action: ActionTypeTodoListReducer): TodolistType[] => {
+export type FilterValuesType = "all" | "active" | "completed";
+
+export type TodolistDomainType = TodolistType & {
+    filter: FilterValuesType
+}
+const initialState: TodolistDomainType[] = []
+type ActionTypeTodoListReducer =
+    addTodoListAC
+    | changeTodolistTitleAC
+    | removeTodolistAC
+    | changeFilterAC
+    | setTodoListsAC
+
+export const TodoListReducer = (state: TodolistDomainType[] = initialState, action: ActionTypeTodoListReducer): TodolistDomainType[] => {
     switch (action.type) {
         case "ADD-TODOLIST": {
-            let newTodolist: TodolistType = {id: action.payload.todolistId, title: action.payload.title, filter: 'all'};
+            let newTodolist: TodolistDomainType = {
+                id: action.payload.todolistId, title: action.payload.title, filter: 'all', addedDate: '',
+                order: 0
+            };
             return (
                 [newTodolist, ...state]
             )
@@ -57,6 +78,10 @@ export const TodoListReducer = (state: TodolistType[] = initialState, action: Ac
             return (
                 state.map(el => el.id === action.payload.todolistId ? {...el, filter: action.payload.value} : el)
             )
+        }
+        case "SET-TODOS": {
+            console.log('set todos')
+            return action.payload.arrayTodoList.map((tl) => ({...tl, filter: "all"}))
         }
         default: {
             return state
@@ -101,4 +126,17 @@ export const changeFilterAC = (value: FilterValuesType, todolistId: string) => {
             todolistId,
         }
     } as const
+}
+
+export const setTodoLists = (arrayTodoList: TodolistType[]): setTodoListsAC => {
+    return {
+        type: 'SET-TODOS',
+        payload: {
+            arrayTodoList
+        }
+    } as const
+}
+export const getTodoListTC = () => (dispatch: Dispatch) => {
+    todoListAPI.getTodoList()
+        .then(res => dispatch(setTodoLists(res.data)))
 }

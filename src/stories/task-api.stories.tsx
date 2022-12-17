@@ -8,7 +8,7 @@ export default {
 export const GetTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let id = "689c1f71-6b56-46ce-8b6a-122a8e68839a"
+        let id = "05a9b59f-7d81-4434-85b0-94bb883b9b88"
         taskAPI.getTask(id)
             .then(res => setState(res.data))
     }, [])
@@ -18,8 +18,8 @@ export const GetTask = () => {
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let id = "689c1f71-6b56-46ce-8b6a-122a8e68839a"
-        const title = 'learn'
+        let id = "05a9b59f-7d81-4434-85b0-94bb883b9b88"
+        const title = 'test3'
         taskAPI.createTask(id, title)
             .then(res => setState(res.data.data.item))
     }, [])

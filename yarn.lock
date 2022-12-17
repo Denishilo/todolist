@@ -13129,6 +13129,7 @@ __metadata:
     react-redux: ^8.0.5
     react-scripts: 5.0.1
     redux: ^4.2.0
+    redux-thunk: ^2.4.2
     start-server-and-test: ^1.15.2
     styled-components: ^5.3.6
     typescript: ~4.8.4
@@ -18082,6 +18083,15 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
+  languageName: node
+  linkType: hard
+
+"redux-thunk@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "redux-thunk@npm:2.4.2"
+  peerDependencies:
+    redux: ^4
+  checksum: c7f757f6c383b8ec26152c113e20087818d18ed3edf438aaad43539e9a6b77b427ade755c9595c4a163b6ad3063adf3497e5fe6a36c68884eb1f1cfb6f049a5c
   languageName: node
   linkType: hard
 

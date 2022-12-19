@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import { v1 } from 'uuid'
-import {TaskReducer} from "../reducer/taskReducer";
-import {FilterValuesType, TodoListReducer} from "../reducer/todoListReducer";
+import {taskReducer} from "../reducer/taskReducer";
+import {FilterValuesType, todolistReducer} from "../reducer/todolistReducer";
 import {RootReducerType} from "../redux/store";
 import { legacy_createStore as createStore} from 'redux'
 
 
 const rootReducer = combineReducers({
-    task:TaskReducer,
-    todoList:TodoListReducer
+    task:taskReducer,
+    todoList:todolistReducer
 })
 
 const initialGlobalState:RootReducerType = {

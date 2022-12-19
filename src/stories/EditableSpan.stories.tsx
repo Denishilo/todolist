@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import TextField from "@mui/material/TextField";
-import {EditableSpan} from "../EditableSpan";
+import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecorator";
 import {storyBookStore} from "./storeStoreBook";
 import {Provider, useDispatch, useSelector} from "react-redux";

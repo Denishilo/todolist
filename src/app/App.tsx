@@ -1,25 +1,21 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
-import {AddItemForm} from './AddItemForm';
-import {HeaderBar} from "./HeaderBar";
+import {Todolist} from '../components/Todolist';
+import {AddItemForm} from '../components/AddItemForm/AddItemForm';
+import {HeaderBar} from "../components/HeaderBar";
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import {
-    addTodoListAC, getTodoListTC,
-    TodolistDomainType
-} from "./reducer/todoListReducer";
-import {useAppDispatch, useAppSelector} from "./redux/store";
-import {TaskType} from "./api/taskApi";
+import {addTodoListTC, getTodoListTC, TodolistDomainType} from "../reducer/todolistReducer";
+import {useAppDispatch, useAppSelector} from "../redux/store";
+import {TaskType} from "../api/taskApi";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function App() {
-    console.log('App re-render ...')
-    let statetodoList = useAppSelector<TodolistDomainType[]>(state => state.todoList)
+    let stateTodoList = useAppSelector<TodolistDomainType[]>(state => state.todoList)
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
@@ -27,8 +23,7 @@ function App() {
     },[])
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodoListAC(title);
-        dispatch(action)
+        dispatch(addTodoListTC(title))
     }, [dispatch])
 
     return (
@@ -42,7 +37,7 @@ function App() {
                 </Grid>
                 <Grid container spacing={3}>
                     {
-                        statetodoList.map(tl => {
+                        stateTodoList.map(tl => {
                             return <Grid item>
                                 <Paper style={{padding: '10px'}}>
                                     <Todolist

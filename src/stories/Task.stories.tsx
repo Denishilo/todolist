@@ -1,11 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {Task} from "../Task";
+import {Task} from "../components/Task";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../redux/store";
 import {changeStatusAC, changeTaskTitleAC} from "../reducer/taskReducer";
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "../EditableSpan";
+import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {action} from "@storybook/addon-actions";
@@ -43,7 +43,7 @@ const TemplateWork: ComponentStory<typeof Task> = (args) => {   //как обе�
   const onClickHandler = action('remove-task')
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let statusValue = e.currentTarget.checked ? 2 : 0;
-    dispatch(changeStatusAC(task.id, statusValue, todolistId))
+    dispatch(changeStatusAC(todolistId,task.id, statusValue))
   }
 
   const onTitleChangeHandler = (newValue: string) => {

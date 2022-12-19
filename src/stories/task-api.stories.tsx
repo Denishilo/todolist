@@ -37,18 +37,18 @@ export const DeleteTask = () => {
 
     return <div>{JSON.stringify(state)}</div>
 }
-export const UpdateTask = () => {
-    const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        const todoListId = "689c1f71-6b56-46ce-8b6a-122a8e68839a";
-        let taskId = "19f1ed77-a54a-448d-9efe-6fafae830216";
-        let obj = {
-            title: 'ahahahah'
-        }
-        taskAPI.updateTask(todoListId, taskId, obj)
-            .then(res => setState(res.data))
-    }, [])
-
-    return <div>{JSON.stringify(state)}</div>
-}
+// export const UpdateTask = () => {
+//     const [state, setState] = useState<any>(null)
+//     useEffect(() => {
+//         const todoListId = "689c1f71-6b56-46ce-8b6a-122a8e68839a";
+//         let taskId = "19f1ed77-a54a-448d-9efe-6fafae830216";
+//         let obj = {
+//             title: 'ahahahah'
+//         }
+//         taskAPI.updateTask(todoListId, taskId, obj)
+//             .then(res => setState(res.data))
+//     }, [])
+//
+//     return <div>{JSON.stringify(state)}</div>
+// }
 

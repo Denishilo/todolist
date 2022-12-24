@@ -13,6 +13,7 @@ type TaskTypeProps = {
 }
 
 export const Task = memo((props: TaskTypeProps) => {
+    console.log('tasks')
     let {todolistId} = props
     let {status, title, id} = props.task
 

@@ -10,17 +10,29 @@ import {addTodoListTC, getTodoListTC, TodolistDomainType} from "../reducer/todol
 import {useAppDispatch, useAppSelector} from "../redux/store";
 import {TaskType} from "../api/taskApi";
 
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import {Menu} from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
+import {RequestStatusType} from "../reducer/appReducer";
+import {ErrorSnackbar} from "../components/ErrorSnackBar/ErrorSnackbar";
+
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function App() {
+    let status = useAppSelector<RequestStatusType>(state => state.app.status)
     let stateTodoList = useAppSelector<TodolistDomainType[]>(state => state.todoList)
     const dispatch = useAppDispatch()
 
-    useEffect(()=>{
+
+    useEffect(() => {
         dispatch(getTodoListTC())
-    },[])
+    }, [])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
@@ -28,10 +40,12 @@ function App() {
 
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <HeaderBar/>
+            {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
                 <Grid container style={{padding: "20px 0 50px 10px"}}>
-                    <Grid item style={{minWidth: '310px', maxWidth:'300px'}}>
+                    <Grid item style={{minWidth: '310px', maxWidth: '300px'}}>
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
                 </Grid>
@@ -54,3 +68,12 @@ function App() {
 }
 
 export default App;
+
+
+///types
+
+export enum RESULT_CODE {
+    SUCCESS = 0,
+    ERROR = 1,
+    CAPTCHA = 10,
+}

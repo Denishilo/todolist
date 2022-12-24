@@ -1,20 +1,23 @@
-import { combineReducers } from 'redux'
+import {applyMiddleware, combineReducers} from 'redux'
 import { v1 } from 'uuid'
 import {taskReducer} from "../reducer/taskReducer";
 import {FilterValuesType, todolistReducer} from "../reducer/todolistReducer";
 import {RootReducerType} from "../redux/store";
 import { legacy_createStore as createStore} from 'redux'
+import thunkMiddleware from "redux-thunk";
+import {appReducer} from "../reducer/appReducer";
 
 
 const rootReducer = combineReducers({
     task:taskReducer,
-    todoList:todolistReducer
+    todoList:todolistReducer,
+    app:appReducer
 })
 
 const initialGlobalState:RootReducerType = {
     todoList: [
-        {id: 'todolistId1', title: 'What to learn', filter: 'all' as FilterValuesType, order:0, addedDate:''},
-        {id: 'todolistId2', title: 'What to buy', filter: 'all' as FilterValuesType,order:0, addedDate:''}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all' as FilterValuesType, order:0, addedDate:'',entityStatus: 'idle'},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all' as FilterValuesType,order:0, addedDate:'',entityStatus: 'idle'}
     ],
     task: {
         ['todolistId1']: [
@@ -25,7 +28,12 @@ const initialGlobalState:RootReducerType = {
             {id: v1(), title: 'Milk', status: 2, completed:true, description:'', priority:0, addedDate:'', deadline:'', order:0, startDate:'', todoListId:"todolistId2"},
             {id: v1(), title: 'React Book', status: 2, completed:true, description:'', priority:0, addedDate:'', deadline:'', order:0, startDate:'', todoListId:"todolistId2"}
         ]
+    },
+    app:{
+        status: 'loading',
+        error: null
     }
+
 }
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as RootReducerType)
+export const storyBookStore = createStore(rootReducer,applyMiddleware(thunkMiddleware))

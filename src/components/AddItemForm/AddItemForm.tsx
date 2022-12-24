@@ -4,10 +4,13 @@ import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disable?: boolean
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
     console.log('add item form re-render ....')
+    let {disable} = props
+    console.log('disable', disable)
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -39,9 +42,11 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    error={!!error}
-                   style={{width:'230px'}}
-                   size={"small"}/>
-        <Button onClick={addItem} variant="contained"
+                   style={{width: '230px'}}
+                   size={"small"}
+                   disabled={disable}
+                   />
+        <Button onClick={addItem} variant="contained" disabled={disable}
                 style={{maxWidth: '15%', height: '40px', minWidth: '30px', minHeight: '30px'}}>+</Button>
     </div>
 })

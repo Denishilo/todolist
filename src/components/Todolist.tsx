@@ -9,6 +9,7 @@ import {changeFilterAC, changeTitleTodolistTC, deleteTodoListTC, TodolistDomainT
 import {useAppDispatch, useAppSelector} from "../redux/store";
 import {Task} from "./Task";
 import {TaskType} from "../api/taskApi";
+import {RequestStatusType} from "../reducer/appReducer";
 
 type PropsType = {
     todoList: TodolistDomainType
@@ -17,7 +18,6 @@ type PropsType = {
 export const Todolist = memo((props: PropsType) => {
     console.log('TodoList re-render ...')
     const {id: todolistId, title, filter} = props.todoList
-
     let stateTask = useAppSelector<Array<TaskType>>(state => state.task[todolistId])
     const dispatch = useAppDispatch()
 
@@ -50,11 +50,11 @@ export const Todolist = memo((props: PropsType) => {
     return (
         <div>
             <h3><EditableSpan value={title} onChange={changeTodolistTitle}/>
-                <IconButton onClick={removeTodolist} aria-label="delete">
+                <IconButton disabled={props.todoList.entityStatus==='loading'} onClick={removeTodolist} aria-label="delete">
                     <DeleteIcon/>
                 </IconButton>
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disable={props.todoList.entityStatus==='loading'}/>
             <div>
                 {
                     stateTask.map(t => {

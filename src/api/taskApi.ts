@@ -69,7 +69,7 @@ type GetResponseType = {
     error: string
 }
 
-type DataType = {
+export type DataType = {
     item: TaskType
 }
 type ResponseType<T = {}> = {

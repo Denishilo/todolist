@@ -29,21 +29,21 @@ test('correct task should be deleted from correct array', () => {
 });
 
 
-test('correct task should be added to correct array', () => {
-    let task = {
-        id: "4", title: "juce", status: 0, completed:false,
-        description:'', priority:0, addedDate:'', deadline:'',
-        order:0, startDate:'', todoListId:"todolistId2" }
-    const action = addTaskAC(task);
-
-    const endState = taskReducer(startState, action)
-
-    expect(endState["todolistId1"].length).toBe(3);
-    expect(endState["todolistId2"].length).toBe(4);
-    expect(endState["todolistId2"][0].id).toBeDefined();
-    expect(endState["todolistId2"][3].title).toBe("juce");
-    expect(endState["todolistId2"][0].status).toBe(0);
-});
+// test('correct task should be added to correct array', () => {
+//     let task = {
+//         id: "4", title: "juce", status: 0, completed:false,
+//         description:'', priority:0, addedDate:'', deadline:'',
+//         order:0, startDate:'', todoListId:"todolistId2" }
+//     const action = addTaskAC(task);
+//
+//     const endState = taskReducer(startState, action)
+//
+//     expect(endState["todolistId1"].length).toBe(3);
+//     expect(endState["todolistId2"].length).toBe(4);
+//     expect(endState["todolistId2"][0].id).toBeDefined();
+//     expect(endState["todolistId2"][3].title).toBe("juce");
+//     expect(endState["todolistId2"][0].status).toBe(0);
+// });
 
 test('status of specified task should be changed', () => {
     const action = changeStatusAC("todolistId2","2", 0 );
@@ -62,21 +62,21 @@ test('title of specified task should be changed', () => {
     expect(endState["todolistId2"][1].title).toBe("yogurt");
     expect(endState["todolistId2"][0].title).toBe("bread");
 });
-test('new array should be added when new todolist is added', () => {
-    const action = addTodoListAC("new todolist");
-
-    const endState = taskReducer(startState, action)
-
-
-    const keys = Object.keys(endState);
-    const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
-    if (!newKey) {
-        throw Error("new key should be added")
-    }
-
-    expect(keys.length).toBe(3);
-    expect(endState[newKey]).toEqual([]);
-});
+// test('new array should be added when new todolist is added', () => {
+//     const action = addTodoListAC("new todolist");
+//
+//     const endState = taskReducer(startState, action)
+//
+//
+//     const keys = Object.keys(endState);
+//     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
+//     if (!newKey) {
+//         throw Error("new key should be added")
+//     }
+//
+//     expect(keys.length).toBe(3);
+//     expect(endState[newKey]).toEqual([]);
+// });
 test('propertry with todolistId should be deleted', () => {
     const action = removeTodolistAC("todolistId2");
 

@@ -20,3 +20,6 @@ type ThunkAppDispatchType = ThunkDispatch<RootReducerType, any, AnyAction>
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<RootReducerType> = useSelector
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+
+// @ts-ignore
+window.store = store;

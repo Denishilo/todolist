@@ -6,6 +6,7 @@ import {RequestStatusType, setError, setStatus, SetStatusType} from "./appReduce
 import {AxiosError} from "axios";
 import {RESULT_CODE} from "../app/App";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
+import axios from "axios";
 
 const initialState: TodolistDomainType[] = []
 
@@ -106,8 +107,12 @@ export const getTodoListTC = () => (dispatch: Dispatch<TodoListReducerActionType
     dispatch(setStatus('loading'))
     todoListAPI.getTodoList()
         .then(res => {
+            console.log('getTodo',res)
             dispatch(setTodoListsAC(res.data))
             dispatch(setStatus('succeeded'))
+        })
+        .catch(e => {
+            handleServerNetworkError(e.message, dispatch)
         })
 }
 
@@ -122,7 +127,7 @@ export const addTodoListTC = (title: string) => (dispatch: Dispatch<AppActionsTy
                 handleServerAppError<{ item: TodolistType }>(res.data, dispatch)
             }
         })
-        .catch((e)=>{
+        .catch((e) => {
             handleServerNetworkError(e.message, dispatch)
         })
 }
@@ -132,23 +137,37 @@ export const deleteTodoListTC = (todolistId: string) => (dispatch: Dispatch<AppA
     dispatch(setEntityStatusAC(todolistId, 'loading'))
     todoListAPI.deleteTodoList(todolistId)
         .then(res => {
-            dispatch(removeTodolistAC(todolistId))
-            dispatch(setStatus('succeeded'))
+            if(res.data.resultCode === RESULT_CODE.SUCCESS){
+                dispatch(removeTodolistAC(todolistId))
+                dispatch(setStatus('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
         })
-        .catch((e:Error) => {
+        .catch((e: Error) => {
             dispatch(setEntityStatusAC(todolistId, 'idle'))
             dispatch(setStatus('failed'))
             dispatch(setError(e.message))
         })
 }
 
-export const changeTitleTodolistTC = (todolistId: string, title: string) => (dispatch: Dispatch<AppActionsType>) => {
+export const changeTitleTodolistTC = (todolistId: string, title: string) => async (dispatch: Dispatch<AppActionsType>) => {
     dispatch(setStatus('loading'))
-    todoListAPI.updateTodoList(todolistId, title)
-        .then(res => {
+    try{
+        let res = await todoListAPI.updateTodoList(todolistId, title)
+        if(res.data.resultCode === RESULT_CODE.SUCCESS){
             dispatch(changeTodolistTitleAC(todolistId, title))
             dispatch(setStatus('succeeded'))
-        })
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    }
+    catch (e) {
+        if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
+            const error = e.response ? e.response.data.message : e.message
+            handleServerNetworkError(error, dispatch)
+        }
+    }
 }
 
 /////////// types

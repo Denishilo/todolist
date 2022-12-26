@@ -19,6 +19,7 @@ import {Menu} from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
 import {RequestStatusType} from "../reducer/appReducer";
 import {ErrorSnackbar} from "../components/ErrorSnackBar/ErrorSnackbar";
+import {v1} from "uuid";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>

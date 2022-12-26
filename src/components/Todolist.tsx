@@ -19,11 +19,12 @@ export const Todolist = memo((props: PropsType) => {
     console.log('TodoList re-render ...')
     const {id: todolistId, title, filter} = props.todoList
     let stateTask = useAppSelector<Array<TaskType>>(state => state.task[todolistId])
+
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(getTasksTC(todolistId))
-    }, [])
+    }, [dispatch])
 
     if (filter === "active") {
         stateTask = stateTask.filter(t => t.status === 0);

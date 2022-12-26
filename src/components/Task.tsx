@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, {ChangeEvent, memo} from "react";
 import {removeTaskTC, updateTaskStatusTC, updateTaskTitleTC,} from "../reducer/taskReducer";
 import {TaskType} from "../api/taskApi";
-import {useAppDispatch} from "../redux/store";
+import {useAppDispatch, useAppSelector} from "../redux/store";
 
 type TaskTypeProps = {
     task:TaskType
@@ -18,6 +18,7 @@ export const Task = memo((props: TaskTypeProps) => {
     let {status, title, id} = props.task
 
     const dispatch = useAppDispatch()
+    const entityStatus = useAppSelector(state => state.app.status)
     const onClickHandler = () => dispatch(removeTaskTC(todolistId, id))
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +32,9 @@ export const Task = memo((props: TaskTypeProps) => {
 
     return (
         <div className={status === 2 ? "is-done" : ""}>
-            <Checkbox onChange={onChangeHandler} checked={status === 2} color='default'/>
+            <Checkbox disabled={entityStatus==='loading'} onChange={onChangeHandler} checked={status === 2} color='default'/>
             <EditableSpan value={title} onChange={onTitleChangeHandler}/>
-            <IconButton onClick={onClickHandler} aria-label="delete">
+            <IconButton disabled={entityStatus==='loading'} onClick={onClickHandler} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>
         </div>)

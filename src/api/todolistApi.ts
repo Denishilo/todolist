@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const instanceTodo = axios.create({
+export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
     headers: {
@@ -10,16 +10,16 @@ const instanceTodo = axios.create({
 
 export const todoListAPI = {
     getTodoList() {
-        return instanceTodo.get<Array<TodolistType>>('/todo-lists')
+        return instance.get<Array<TodolistType>>('/todo-lists')
     },
     createTodoList(title: string) {
-        return instanceTodo.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title})
+        return instance.post<ResponseType<{ item: TodolistType }>>('/todo-lists', {title})
     },
     updateTodoList(id: string, title: string) {
-        return instanceTodo.put<ResponseType>(`/todo-lists/${id}`, {title})
+        return instance.put<ResponseType>(`/todo-lists/${id}`, {title})
     },
     deleteTodoList(id: string) {
-        return instanceTodo.delete<ResponseType>(`/todo-lists/${id}`)
+        return instance.delete<ResponseType>(`/todo-lists/${id}`)
     }
 }
 

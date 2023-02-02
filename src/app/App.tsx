@@ -20,6 +20,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import {RequestStatusType} from "../reducer/appReducer";
 import {ErrorSnackbar} from "../components/ErrorSnackBar/ErrorSnackbar";
 import {v1} from "uuid";
+import {Navigate, Route, Routes} from "react-router-dom";
+import {TodoListsList} from "../components/TodoListsList/todoListsList";
+import {Login} from "../components/Login/login";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -39,30 +42,26 @@ function App() {
         dispatch(addTodoListTC(title))
     }, [dispatch])
 
+
     return (
         <div className="App">
             <ErrorSnackbar/>
             <HeaderBar/>
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
-                <Grid container style={{padding: "20px 0 50px 10px"}}>
+                <Grid container style={{padding: "20px 0 50px 0px"}}>
                     <Grid item style={{minWidth: '310px', maxWidth: '300px'}}>
                         <AddItemForm addItem={addTodolist}/>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3}>
-                    {
-                        stateTodoList.map(tl => {
-                            return <Grid item>
-                                <Paper style={{padding: '10px'}}>
-                                    <Todolist
-                                        todoList={tl}
-                                    />
-                                </Paper>
-                            </Grid>
-                        })
-                    }
-                </Grid>
+                <Container>
+                    <Routes>
+                        <Route path={'/'} element={<TodoListsList/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+                    </Routes>
+                </Container>
             </Container>
         </div>
     );

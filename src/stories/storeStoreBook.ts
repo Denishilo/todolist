@@ -31,7 +31,12 @@ const initialGlobalState:RootReducerType = {
     },
     app:{
         status: 'loading',
-        error: null
+        error: null,
+        isInitialized:false
+    },
+    auth:{
+        isLoggedIn: false,
+
     }
 
 }

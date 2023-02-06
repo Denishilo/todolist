@@ -5,8 +5,15 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import {useNavigate} from "react-router-dom";
 
-export const HeaderBar = ()=> {
+
+export const HeaderBar = () => {
+    const navigate = useNavigate()
+
+    const onClickHandler = () => {
+        navigate('/login')
+    }
     return (
         <AppBar position="static">
             <Toolbar>
@@ -15,14 +22,14 @@ export const HeaderBar = ()=> {
                     edge="start"
                     color="inherit"
                     aria-label="menu"
-                    sx={{ mr: 2 }}
+                    sx={{mr: 2}}
                 >
-                    <MenuIcon />
+                    <MenuIcon/>
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     ToDoList
                 </Typography>
-                <Button color="inherit">Login</Button>
+                <Button onClick={onClickHandler} color="inherit">Login</Button>
             </Toolbar>
         </AppBar>
     )

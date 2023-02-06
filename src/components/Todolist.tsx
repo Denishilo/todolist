@@ -9,12 +9,14 @@ import {changeFilterAC, changeTitleTodolistTC, deleteTodoListTC, TodolistDomainT
 import {useAppDispatch, useAppSelector} from "../redux/store";
 import {Task} from "./Task";
 import {TaskType} from "../api/taskApi";
+import {useNavigate} from "react-router-dom";
 
 type PropsType = {
     todoList: TodolistDomainType
 }
 
 export const Todolist = memo((props: PropsType) => {
+
     console.log('TodoList re-render ...')
     const {id: todolistId, title, filter} = props.todoList
     let stateTask = useAppSelector<Array<TaskType>>(state => state.task[todolistId])

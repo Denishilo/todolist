@@ -5,11 +5,13 @@ import {legacy_createStore as createStore} from 'redux'
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {appReducer} from "../reducer/appReducer";
+import {authReducer} from "../components/Login/authReducer";
 
 export const rootReducer = combineReducers({
     task: taskReducer,
     todoList: todolistReducer,
     app:appReducer,
+    auth: authReducer,
 })
 
 

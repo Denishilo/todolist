@@ -23,25 +23,34 @@ import {v1} from "uuid";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {TodoListsList} from "../components/TodoListsList/todoListsList";
 import {Login} from "../components/Login/login";
+import {meAuthTC} from "../components/Login/authReducer";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 function App() {
-    let status = useAppSelector<RequestStatusType>(state => state.app.status)
-    let stateTodoList = useAppSelector<TodolistDomainType[]>(state => state.todoList)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
+    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
     const dispatch = useAppDispatch()
-
-
-    useEffect(() => {
-        dispatch(getTodoListTC())
-    }, [])
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
     }, [dispatch])
 
+
+    useEffect(() => {
+        dispatch(meAuthTC())
+    }, [])
+
+
+    if(!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
 
     return (
         <div className="App">

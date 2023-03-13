@@ -1,12 +1,11 @@
 import {RESULT_CODE, TasksStateType} from "../app/App";
 import {addTodoListAC, removeTodolistAC, setTodoListsAC} from "./todolistReducer";
-import {DataType, taskAPI, TaskStatuses, TaskType, UpdateTaskType} from "../api/taskApi";
+import {taskAPI, TaskStatuses, TaskType, UpdateTaskType} from "../api/taskAPI";
 import {Dispatch} from "redux";
 import {AppActionsType, RootReducerType} from "../redux/store";
 import {setError, SetErrorType, setStatus, SetStatusType} from "./appReducer";
 import axios, {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
-import {TodolistType} from "../api/todolistApi";
 
 const initialState: TasksStateType = {}
 

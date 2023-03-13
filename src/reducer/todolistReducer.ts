@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {todoListAPI, TodolistType} from "../api/todolistApi";
+import {todolistAPI, TodolistType} from "../api/todolistAPI";
 import {Dispatch} from "redux";
 import {AppActionsType} from "../redux/store";
 import {RequestStatusType, setError, setStatus, SetStatusType} from "./appReducer";
@@ -105,7 +105,7 @@ export const setEntityStatusAC = (todolistId: string, entityStatus: RequestStatu
 
 export const getTodoListTC = () => (dispatch: Dispatch<TodoListReducerActionType>) => {
     dispatch(setStatus('loading'))
-    todoListAPI.getTodoList()
+    todolistAPI.getTodoList()
         .then(res => {
             console.log('getTodo',res)
             dispatch(setTodoListsAC(res.data))
@@ -118,7 +118,7 @@ export const getTodoListTC = () => (dispatch: Dispatch<TodoListReducerActionType
 
 export const addTodoListTC = (title: string) => (dispatch: Dispatch<AppActionsType>) => {
     dispatch(setStatus('loading'))
-    todoListAPI.createTodoList(title)
+    todolistAPI.createTodoList(title)
         .then(res => {
             if (res.data.resultCode === RESULT_CODE.SUCCESS) {
                 dispatch(addTodoListAC(title))
@@ -135,7 +135,7 @@ export const addTodoListTC = (title: string) => (dispatch: Dispatch<AppActionsTy
 export const deleteTodoListTC = (todolistId: string) => (dispatch: Dispatch<AppActionsType>) => {
     dispatch(setStatus('loading'))
     dispatch(setEntityStatusAC(todolistId, 'loading'))
-    todoListAPI.deleteTodoList(todolistId)
+    todolistAPI.deleteTodoList(todolistId)
         .then(res => {
             if(res.data.resultCode === RESULT_CODE.SUCCESS){
                 dispatch(removeTodolistAC(todolistId))
@@ -154,7 +154,7 @@ export const deleteTodoListTC = (todolistId: string) => (dispatch: Dispatch<AppA
 export const changeTitleTodolistTC = (todolistId: string, title: string) => async (dispatch: Dispatch<AppActionsType>) => {
     dispatch(setStatus('loading'))
     try{
-        let res = await todoListAPI.updateTodoList(todolistId, title)
+        let res = await todolistAPI.updateTodoList(todolistId, title)
         if(res.data.resultCode === RESULT_CODE.SUCCESS){
             dispatch(changeTodolistTitleAC(todolistId, title))
             dispatch(setStatus('succeeded'))

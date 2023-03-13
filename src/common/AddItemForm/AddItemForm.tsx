@@ -1,22 +1,17 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
+import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-type AddItemFormPropsType = {
-    addItem: (title: string) => void
-    disable?: boolean
-}
-
-export const AddItemForm = memo((props: AddItemFormPropsType) => {
+export const AddItemForm: FC<PropsType> = memo(({addItem, disable}) => {
     console.log('add item form re-render ....')
-    let {disable} = props
     console.log('disable', disable)
-    let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
 
-    const addItem = () => {
+    const [title, setTitle] = useState("")
+    const [error, setError] = useState<string | null>(null)
+
+    const addItemHandler = () => {
         if (title.trim() !== "") {
-            props.addItem(title);
+            addItem(title);
             setTitle("");
         } else {
             setError("Title is required");
@@ -32,7 +27,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
             setError(null);
         }
         if (e.charCode === 13) {
-            addItem();
+            addItemHandler();
         }
     }
 
@@ -45,8 +40,15 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                    style={{width: '230px'}}
                    size={"small"}
                    disabled={disable}
-                   />
-        <Button onClick={addItem} variant="contained" disabled={disable}
+        />
+        <Button onClick={addItemHandler} variant="contained" disabled={disable}
                 style={{maxWidth: '15%', height: '40px', minWidth: '30px', minHeight: '30px'}}>+</Button>
     </div>
 })
+
+/////////// types //////////////
+
+type PropsType = {
+    addItem: (title: string) => void
+    disable?: boolean
+}

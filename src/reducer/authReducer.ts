@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux'
-import {AppActionsType, setIsInitializedAC, setStatus} from "../../reducer/appReducer";
-import {authAPI, AuthRequestType, ResponseResultCode} from "../../api/authAPI";
-import {handleServerAppError, handleServerNetworkError} from "../../utilits/errorUtilites";
+import {AppActionsType, setIsInitializedAC, setStatus} from "./appReducer";
+import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
+import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
 
 const initialState = {
     isLoggedIn: false,
@@ -26,6 +26,7 @@ export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<Acti
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.login(data)
+        console.log(res)
         if (res.data.resultCode === ResponseResultCode.OK) {
             dispatch(setStatus('succeeded'))
             dispatch(setIsLoggedInAC(true))
@@ -33,6 +34,7 @@ export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<Acti
             handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
+        console.log(e)
         // @ts-ignore
         handleServerNetworkError(e, dispatch)
     }

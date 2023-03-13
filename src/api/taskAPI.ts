@@ -1,4 +1,4 @@
-import {instance} from "./todolistApi";
+import {instance} from "./todolistAPI";
 
 export const taskAPI = {
     getTask(id: string) {
@@ -15,7 +15,7 @@ export const taskAPI = {
     }
 }
 
-////// types
+/////////////// types ///////////////
 
 export enum TaskPriorities {
     Low = 0,

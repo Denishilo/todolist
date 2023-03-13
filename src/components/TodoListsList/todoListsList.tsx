@@ -1,22 +1,25 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {Todolist} from "../Todolist";
+import {Todolist} from "./Todolist";
 import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/store";
-import {getTodoListTC, TodolistDomainType} from "../../reducer/todolistReducer";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../redux/store";
+import {getTodoListTC} from "../../reducer/todolistReducer";
+import {Navigate} from "react-router-dom";
+import {PATH} from "../../common/Constants/Path";
+import {useSelector} from "react-redux";
+import {isLoggedInSelector, todoListSelector} from "./TodoListSelectors";
 
 export const TodoListsList = () => {
     const dispatch = useAppDispatch()
 
-    const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
-    const navigate = useNavigate()
+    const isLoggedIn = useSelector(isLoggedInSelector)
+    const stateTodoList = useSelector(todoListSelector)
+
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getTodoListTC())
         }
     }, [])
-    let stateTodoList = useAppSelector<TodolistDomainType[]>(state => state.todoList)
 
     const listTodolist = stateTodoList.map(tl => {
         return <Grid item>
@@ -30,9 +33,9 @@ export const TodoListsList = () => {
     })
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
-        // navigate()
+        return <Navigate to={PATH.LOGIN}/>
     }
+
     return (
         <Grid container spacing={3}>
             {listTodolist}

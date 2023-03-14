@@ -1,17 +1,18 @@
 import React, {useCallback, useEffect} from 'react';
 import {HeaderBar} from "../common/Header/HeaderBar";
 import Container from '@mui/material/Container';
-import {addTodoListTC} from "../reducer/todolistReducer";
+import {addTodoListTC} from "../reducer/TodolistReducer";
 import {useAppDispatch} from "../redux/store";
 import {TaskType} from "../api/taskAPI";
 import LinearProgress from '@mui/material/LinearProgress';
 import {ErrorSnackbar} from "../common/ErrorSnackBar/ErrorSnackbar";
-import {meAuthTC} from "../reducer/authReducer";
+import {meAuthTC} from "../reducer/AuthReducer";
 import {useSelector} from "react-redux";
 import {isInitializedSelector, statusSelector} from "./appSelectors";
 import {LoaderWrapper} from "../common/LoaderWrapper/LoaderWrapper";
 import {Pages} from "../components/Pages/Pages";
 import {AddItemFormWrapper} from "../common/AddItemForm/AddItemFormWrapper";
+import {v1} from "uuid";
 
 function App() {
     const dispatch = useAppDispatch()
@@ -20,7 +21,8 @@ function App() {
     const isInitialized = useSelector(isInitializedSelector)
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodoListTC(title))
+        const todoId = v1()
+        dispatch(addTodoListTC(title,todoId))
     }, [dispatch])
 
     useEffect(() => {

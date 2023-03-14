@@ -4,8 +4,8 @@ import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import {createTaskTC, getTasksTC} from "../../reducer/taskReducer";
-import {changeFilterAC, changeTitleTodolistTC, deleteTodoListTC, TodolistDomainType} from "../../reducer/todolistReducer";
+import {createTaskTC, getTasksTC} from "../../reducer/TaskReducer";
+import {changeFilterAC, changeTitleTodolistTC, deleteTodoListTC, TodolistDomainType} from "../../reducer/TodolistReducer";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Task} from "../Task/Task";
 import {TaskType} from "../../api/taskAPI";
@@ -24,7 +24,7 @@ export const Todolist = memo((props: PropsType) => {
     useEffect(() => {
         console.log('effectTODOLIST')
         dispatch(getTasksTC(todolistId))
-    }, [dispatch])
+    }, [props.todoList])
 
     if (filter === "active") {
         stateTask = stateTask.filter(t => t.status === 0);

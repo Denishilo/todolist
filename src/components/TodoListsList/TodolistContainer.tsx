@@ -3,13 +3,13 @@ import Paper from "@mui/material/Paper";
 import {Todolist} from "./Todolist";
 import React, {useEffect} from "react";
 import {useAppDispatch} from "../../redux/store";
-import {getTodoListTC} from "../../reducer/todolistReducer";
+import {getTodoListTC} from "../../reducer/TodolistReducer";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../common/Constants/Path";
 import {useSelector} from "react-redux";
 import {isLoggedInSelector, todoListSelector} from "./TodoListSelectors";
 
-export const TodoListsList = () => {
+export const TodolistContainer = () => {
     const dispatch = useAppDispatch()
 
     const isLoggedIn = useSelector(isLoggedInSelector)

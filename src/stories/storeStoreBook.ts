@@ -1,11 +1,11 @@
 import {applyMiddleware, combineReducers} from 'redux'
 import { v1 } from 'uuid'
-import {taskReducer} from "../reducer/taskReducer";
-import {FilterValuesType, todolistReducer} from "../reducer/todolistReducer";
+import {taskReducer} from "../reducer/TaskReducer";
+import {FilterValuesType, todolistReducer} from "../reducer/TodolistReducer";
 import {RootReducerType} from "../redux/store";
 import { legacy_createStore as createStore} from 'redux'
 import thunkMiddleware from "redux-thunk";
-import {appReducer} from "../reducer/appReducer";
+import {appReducer} from "../reducer/AppReducer";
 
 
 const rootReducer = combineReducers({

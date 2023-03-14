@@ -6,7 +6,7 @@ import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecora
 import {storyBookStore} from "./storeStoreBook";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../redux/store";
-import {changeTaskTitleAC} from "../reducer/taskReducer";
+import {changeTaskTitleAC} from "../reducer/TaskReducer";
 import {v1} from "uuid";
 
 export default {

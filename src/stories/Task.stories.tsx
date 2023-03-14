@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import {Task} from "../components/Task/Task";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../redux/store";
-import {changeStatusAC, changeTaskTitleAC} from "../reducer/taskReducer";
+import {changeStatusAC, changeTaskTitleAC} from "../reducer/TaskReducer";
 import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "../common/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";

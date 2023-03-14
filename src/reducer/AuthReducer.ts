@@ -1,27 +1,27 @@
 import {Dispatch} from 'redux'
-import {AppActionsType, setIsInitializedAC, setStatus} from "./appReducer";
+import {AppActionsType, setIsInitializedAC, setStatus} from "./AppReducer";
 import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
 
 const initialState = {
     isLoggedIn: false,
 }
-type InitialStateType = typeof initialState
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'login/SET-IS-LOGGED-IN':
+        case SET_IS_LOGIN:
             return {...state, isLoggedIn: action.value}
-
         default:
             return state
     }
 }
-// actions
-export const setIsLoggedInAC = (value: boolean) =>
-    ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+////////////////////// ACTION CREATORS ////////////////////////
 
-// thunks
+export const setIsLoggedInAC = (value: boolean) =>
+    ({type: SET_IS_LOGIN, value} as const)
+
+//////////////////////// THUNK CREATORS ////////////////////////
+
 export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<ActionsType>) => {
     dispatch(setStatus('loading'))
     try {
@@ -59,5 +59,7 @@ export const meAuthTC = () => async (dispatch: Dispatch<ActionsType>) => {
     }
 }
 
-// types
+////////////////// types ///////////////////
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | AppActionsType
+type InitialStateType = typeof initialState
+const SET_IS_LOGIN = 'SET_IS_LOGIN'

@@ -3,7 +3,7 @@ import {EditableSpan} from "../../common/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, {ChangeEvent, FC, memo} from "react";
-import {removeTaskTC, updateTaskStatusTC, updateTaskTitleTC,} from "../../reducer/taskReducer";
+import {removeTaskTC, updateTaskStatusTC, updateTaskTitleTC,} from "../../reducer/TaskReducer";
 import {TaskType} from "../../api/taskAPI";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
 

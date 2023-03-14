@@ -1,6 +1,6 @@
 import {TasksStateType} from '../app/App';
-import {addTaskAC, changeStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./taskReducer";
-import {addTodoListAC, removeTodolistAC} from "./todolistReducer";
+import {addTaskAC, changeStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./TaskReducer";
+import {addTodoListAC, removeTodolistAC} from "./TodolistReducer";
 
 let startState: TasksStateType = {};
 beforeEach(() => {
@@ -63,7 +63,7 @@ test('title of specified task should be changed', () => {
     expect(endState["todolistId2"][0].title).toBe("bread");
 });
 test('new array should be added when new todolist is added', () => {
-    const action = addTodoListAC("new todolist");
+    const action = addTodoListAC("new todolist",'');
 
     const endState = taskReducer(startState, action)
 

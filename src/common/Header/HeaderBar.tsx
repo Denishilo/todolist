@@ -3,32 +3,27 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {isLoginSelector} from "../../app/appSelectors";
+import {useAppDispatch} from "../../redux/store";
+import {logOutTC} from "../../reducer/AuthReducer";
 
 export const HeaderBar = () => {
-    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
+    const isLogin = useSelector(isLoginSelector)
 
     const onClickHandler = () => {
-        navigate('/login')
+        dispatch(logOutTC())
     }
+
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{mr: 2}}
-                >
-                    <MenuIcon/>
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                <Typography variant="h6" component="div" sx={{flexGrow: 1, marginLeft: 3}}>
                     ToDoList
                 </Typography>
-                <Button onClick={onClickHandler} color="inherit">Login</Button>
+                <Button onClick={onClickHandler} color="inherit">{isLogin ? 'Log Out' : ''}</Button>
             </Toolbar>
         </AppBar>
     )

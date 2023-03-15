@@ -11,8 +11,8 @@ import {useSelector} from "react-redux";
 import {isInitializedSelector, statusSelector} from "./appSelectors";
 import {LoaderWrapper} from "../common/LoaderWrapper/LoaderWrapper";
 import {Pages} from "../components/Pages/Pages";
-import {AddItemFormWrapper} from "../common/AddItemForm/AddItemFormWrapper";
 import {v1} from "uuid";
+import {AddItemForm} from "../common/AddItemForm/AddItemForm";
 
 function App() {
     const dispatch = useAppDispatch()
@@ -38,7 +38,7 @@ function App() {
             <HeaderBar/>
             {status === 'loading' && <LinearProgress color="secondary"/>}
             <Container fixed>
-                <AddItemFormWrapper addItem={addTodolist}/>
+                <AddItemForm addItem={addTodolist}/>
                 <Pages/>
             </Container>
             <ErrorSnackbar/>

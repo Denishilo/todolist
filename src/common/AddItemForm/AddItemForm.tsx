@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import s from './AddItem.module.css'
 
 export const AddItemForm: FC<PropsType> = memo(({addItem, disable}) => {
     console.log('add item form re-render ....')
@@ -31,7 +32,7 @@ export const AddItemForm: FC<PropsType> = memo(({addItem, disable}) => {
         }
     }
 
-    return <div>
+    return <div className={s.wrapper}>
         <TextField id="outlined-basic" label={error ? "Title is required" : 'Title'} variant="outlined"
                    value={title}
                    onChange={onChangeHandler}

@@ -2,6 +2,8 @@ import {Dispatch} from 'redux'
 import {AppActionsType, setIsInitializedAC, setStatus} from "./AppReducer";
 import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
+import axios, {AxiosError} from "axios";
+
 
 const initialState = {
     isLoggedIn: false,
@@ -26,7 +28,6 @@ export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<Acti
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.login(data)
-        console.log(res)
         if (res.data.resultCode === ResponseResultCode.OK) {
             dispatch(setStatus('succeeded'))
             dispatch(setIsLoggedInAC(true))
@@ -34,9 +35,10 @@ export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<Acti
             handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
-        console.log(e)
-        // @ts-ignore
-        handleServerNetworkError(e, dispatch)
+        if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
+            const error = e.response ? e.response.data.message : e.message
+            handleServerNetworkError(error, dispatch)
+        }
     }
 }
 
@@ -51,11 +53,30 @@ export const meAuthTC = () => async (dispatch: Dispatch<ActionsType>) => {
             handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
-        // @ts-ignore
-        handleServerNetworkError(e, dispatch)
-    }
-    finally {
+        if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
+            const error = e.response ? e.response.data.message : e.message
+            handleServerNetworkError(error, dispatch)
+        }
+    } finally {
         dispatch(setIsInitializedAC(true))
+    }
+}
+
+export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatus('loading'))
+    try {
+        let res = await authAPI.logout()
+        if (res.data.resultCode === ResponseResultCode.OK) {
+            dispatch(setStatus('succeeded'))
+            dispatch(setIsLoggedInAC(false))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (e) {
+        if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
+            const error = e.response ? e.response.data.message : e.message
+            handleServerNetworkError(error, dispatch)
+        }
     }
 }
 

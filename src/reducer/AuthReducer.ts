@@ -3,6 +3,7 @@ import {AppActionsType, setIsInitializedAC, setStatus} from "./AppReducer";
 import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
 import axios, {AxiosError} from "axios";
+import {ThunkAppDispatchType} from "../redux/store";
 
 
 const initialState = {
@@ -24,7 +25,7 @@ export const setIsLoggedInAC = (value: boolean) =>
 
 //////////////////////// THUNK CREATORS ////////////////////////
 
-export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (data: AuthRequestType) => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.login(data)
@@ -42,7 +43,7 @@ export const loginTC = (data: AuthRequestType) => async (dispatch: Dispatch<Acti
     }
 }
 
-export const meAuthTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const meAuthTC = () => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.authMe()
@@ -62,7 +63,7 @@ export const meAuthTC = () => async (dispatch: Dispatch<ActionsType>) => {
     }
 }
 
-export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+export const logOutTC = () => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.logout()

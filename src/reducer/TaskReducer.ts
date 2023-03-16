@@ -2,7 +2,7 @@ import {RESULT_CODE, TasksStateType} from "../app/App";
 import {addTodoListAC, removeTodolistAC, setTodoListsAC, TodolistActions} from "./TodolistReducer";
 import {taskAPI, TaskStatuses, TaskType, UpdateTaskType} from "../api/taskAPI";
 import {Dispatch} from "redux";
-import {AppActionsType, RootReducerType} from "../redux/store";
+import {AppActionsType, RootReducerType, ThunkAppDispatchType} from "../redux/store";
 import {setError, SetErrorType, setStatus, SetStatusType} from "./AppReducer";
 import axios, {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
@@ -115,7 +115,7 @@ export const setTaskAC = (todoListId: string, tasks: TaskType[]) => {
 
 ////////////////////////// THUNK CREATORS ///////////////////////
 
-export const getTasksTC = (todoListId: string) => async (dispatch: Dispatch<AppActionsType>) => {
+export const getTasksTC = (todoListId: string) => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await taskAPI.getTask(todoListId)
@@ -134,7 +134,7 @@ export const getTasksTC = (todoListId: string) => async (dispatch: Dispatch<AppA
     }
 }
 
-export const createTaskTC = (todoListId: string, title: string) => async (dispatch: Dispatch<AppActionsType>) => {
+export const createTaskTC = (todoListId: string, title: string) => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await taskAPI.createTask(todoListId, title)
@@ -152,7 +152,7 @@ export const createTaskTC = (todoListId: string, title: string) => async (dispat
     }
 }
 
-export const removeTaskTC = (todoListId: string, taskId: string) => async (dispatch: Dispatch<AppActionsType>) => {
+export const removeTaskTC = (todoListId: string, taskId: string) => async (dispatch: ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await taskAPI.deleteTask(todoListId, taskId)
@@ -170,7 +170,7 @@ export const removeTaskTC = (todoListId: string, taskId: string) => async (dispa
     }
 }
 
-export const updateTaskStatusTC = (todoListId: string, taskId: string, status: TaskStatuses) => (dispatch: Dispatch<AppActionsType>, getState: () => RootReducerType) => {
+export const updateTaskStatusTC = (todoListId: string, taskId: string, status: TaskStatuses) => async (dispatch: ThunkAppDispatchType, getState: () => RootReducerType) => {
     const taskObj = getState().task[todoListId].find((ts) => ts.id === taskId)
     if (taskObj) {
         const changeTaskOdj: UpdateTaskType = {
@@ -183,22 +183,21 @@ export const updateTaskStatusTC = (todoListId: string, taskId: string, status: T
             deadline: taskObj.deadline,
         }
         dispatch(setStatus('loading'))
-        taskAPI.updateTask(todoListId, taskId, changeTaskOdj)
-            .then(res => {
-                const {status} = res.data.data.item
-                dispatch(changeStatusAC(todoListId, taskId, status))
-                dispatch(setStatus('succeeded'))
-            })
-            .catch((e) => {
-                if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
-                    const error = e.response ? e.response.data.message : e.message
-                    handleServerNetworkError(error, dispatch)
-                }
-            })
+        try {
+            let res = await taskAPI.updateTask(todoListId, taskId, changeTaskOdj)
+            const {status} = res.data.data.item
+            dispatch(changeStatusAC(todoListId, taskId, status))
+            dispatch(setStatus('succeeded'))
+        } catch (e) {
+            if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
+                const error = e.response ? e.response.data.message : e.message
+                handleServerNetworkError(error, dispatch)
+            }
+        }
     }
 }
 
-export const updateTaskTitleTC = (todoListId: string, taskId: string, title: string) => (dispatch: Dispatch<AppActionsType>, getState: () => RootReducerType) => {
+export const updateTaskTitleTC = (todoListId: string, taskId: string, title: string) => async (dispatch: ThunkAppDispatchType, getState: () => RootReducerType) => {
     const taskObj = getState().task[todoListId].find(t => t.id === taskId)
     if (taskObj) {
         const changeTaskOdj: UpdateTaskType = {
@@ -211,19 +210,20 @@ export const updateTaskTitleTC = (todoListId: string, taskId: string, title: str
             deadline: taskObj.deadline,
         }
         dispatch(setStatus('loading'))
-        taskAPI.updateTask(todoListId, taskId, changeTaskOdj)
-            .then(res => {
-                if (res.data.resultCode === RESULT_CODE.SUCCESS) {
-                    dispatch(changeTaskTitleAC(todoListId, taskId, title))
-                    dispatch(setStatus('succeeded'))
-                } else {
-                    handleServerAppError<{ item: TaskType }>(res.data, dispatch)
-                }
-            })
-            .catch((e: AxiosError<{ message: string }>) => {
+        try {
+            let res = await taskAPI.updateTask(todoListId, taskId, changeTaskOdj)
+            if (res.data.resultCode === RESULT_CODE.SUCCESS) {
+                dispatch(changeTaskTitleAC(todoListId, taskId, title))
+                dispatch(setStatus('succeeded'))
+            } else {
+                handleServerAppError<{ item: TaskType }>(res.data, dispatch)
+            }
+        } catch (e) {
+            if (axios.isAxiosError<AxiosError<{ message: string }>>(e)) {
                 const error = e.response ? e.response.data.message : e.message
                 handleServerNetworkError(error, dispatch)
-            })
+            }
+        }
     }
 }
 

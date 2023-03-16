@@ -16,7 +16,7 @@ export const rootReducer = combineReducers({
 
 export type RootReducerType = ReturnType<typeof rootReducer>
 export type AppActionsType = TodoListReducerActionType | TaskReducerActionType
-type ThunkAppDispatchType = ThunkDispatch<RootReducerType, any, AnyAction>
+export type ThunkAppDispatchType = ThunkDispatch<RootReducerType, any, AnyAction>
 
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
 export const useAppSelector: TypedUseSelectorHook<RootReducerType> = useSelector

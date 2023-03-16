@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 import {isInitializedSelector, statusSelector} from "./appSelectors";
 import {LoaderWrapper} from "../common/LoaderWrapper/LoaderWrapper";
 import {Pages} from "../components/Pages/Pages";
-import {v1} from "uuid";
+
 import {AddItemForm} from "../common/AddItemForm/AddItemForm";
 
 function App() {
@@ -21,8 +21,7 @@ function App() {
     const isInitialized = useSelector(isInitializedSelector)
 
     const addTodolist = useCallback((title: string) => {
-        const todoId = v1()
-        dispatch(addTodoListTC(title,todoId))
+        dispatch(addTodoListTC(title))
     }, [dispatch])
 
     useEffect(() => {

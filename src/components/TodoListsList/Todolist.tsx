@@ -10,19 +10,12 @@ import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Task} from "../Task/Task";
 import {TaskType} from "../../api/taskAPI";
 
-type PropsType = {
-    todoList: TodolistDomainType
-}
-
 export const Todolist = memo((props: PropsType) => {
-
-    console.log('TodoList re-render ...')
     const {id: todolistId, title, filter} = props.todoList
     let stateTask = useAppSelector<Array<TaskType>>(state => state.task[todolistId])
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        console.log('effectTODOLIST')
         dispatch(getTasksTC(todolistId))
     }, [props.todoList])
 
@@ -80,5 +73,8 @@ export const Todolist = memo((props: PropsType) => {
             </div>
         </div>)
 })
+///////////////////// types ////////////////////
 
-
+type PropsType = {
+    todoList: TodolistDomainType
+}

@@ -4,9 +4,6 @@ import TextField from '@mui/material/TextField';
 import s from './AddItem.module.css'
 
 export const AddItemForm: FC<PropsType> = memo(({addItem, disable}) => {
-    console.log('add item form re-render ....')
-    console.log('disable', disable)
-
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 

@@ -47,13 +47,11 @@ function App() {
 
 export default App;
 
-
 ///////////////// types //////////////////
 
 export enum RESULT_CODE {
     SUCCESS = 0,
     ERROR = 1,
-    CAPTCHA = 10,
 }
 
 export type TasksStateType = {

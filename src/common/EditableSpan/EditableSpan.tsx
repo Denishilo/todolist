@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 
 
 export const EditableSpan: FC<PropsType> = memo(({value, onChange}) => {
-    console.log('editable span....')
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState(value);
 

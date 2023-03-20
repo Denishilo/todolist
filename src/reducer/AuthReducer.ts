@@ -1,10 +1,8 @@
-import {Dispatch} from 'redux'
 import {AppActionsType, setIsInitializedAC, setStatus} from "./AppReducer";
 import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
 import axios, {AxiosError} from "axios";
 import {ThunkAppDispatchType} from "../redux/store";
-
 
 const initialState = {
     isLoggedIn: false,
@@ -63,7 +61,7 @@ export const meAuthTC = () => async (dispatch: ThunkAppDispatchType) => {
     }
 }
 
-export const logOutTC = () => async (dispatch: ThunkAppDispatchType) => {
+export const logOutTC = () => async (dispatch:ThunkAppDispatchType) => {
     dispatch(setStatus('loading'))
     try {
         let res = await authAPI.logout()

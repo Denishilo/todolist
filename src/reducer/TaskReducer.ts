@@ -1,8 +1,7 @@
 import {RESULT_CODE, TasksStateType} from "../app/App";
 import {addTodoListAC, removeTodolistAC, setTodoListsAC, TodolistActions} from "./TodolistReducer";
 import {taskAPI, TaskStatuses, TaskType, UpdateTaskType} from "../api/taskAPI";
-import {Dispatch} from "redux";
-import {AppActionsType, RootReducerType, ThunkAppDispatchType} from "../redux/store";
+import {RootReducerType, ThunkAppDispatchType} from "../redux/store";
 import {setError, SetErrorType, setStatus, SetStatusType} from "./AppReducer";
 import axios, {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";

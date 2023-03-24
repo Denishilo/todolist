@@ -1,4 +1,4 @@
-import {AppActionsType, setIsInitializedAC, setStatus} from "./AppReducer";
+import {AppActionsType, setIsInitialized, setStatus} from "./AppReducer";
 import {authAPI, AuthRequestType, ResponseResultCode} from "../api/authAPI";
 import {handleServerAppError, handleServerNetworkError} from "../utilits/errorUtilites";
 import axios, {AxiosError} from "axios";
@@ -57,7 +57,7 @@ export const meAuthTC = () => async (dispatch: ThunkAppDispatchType) => {
             handleServerNetworkError(error, dispatch)
         }
     } finally {
-        dispatch(setIsInitializedAC(true))
+        dispatch(setIsInitialized(true))
     }
 }
 
